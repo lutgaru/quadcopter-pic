@@ -1,0 +1,15 @@
+0	1	mikroCPIC1618.exe -MSF -DBG -pP16F1827 -DL -O11111114 -fo4 -N"C:\Users\NEFT\Desktop\gy-85-1827\gy-85-1827.mcppi" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Defs\" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Uses\P16_Enh\" -SP"C:\Users\NEFT\Desktop\gy-85-1827\" -SP"C:\Users\NEFT\Desktop\GY85 9DOF IMU\GY-85_9DOF_IMU\" -IP"C:\Users\NEFT\Desktop\gy-85-1827\" "GY85.c" "gy-85-main.c" "__Lib_Math.mcl" "__Lib_MathDouble.mcl" "__Lib_System.mcl" "__Lib_Delays.mcl" "__Lib_CType.mcl" "__Lib_CString.mcl" "__Lib_CStdlib.mcl" "__Lib_CMath.mcl" "__Lib_MemManager.mcl" "__Lib_Conversions.mcl" "__Lib_Sprinti.mcl" "__Lib_Sprintl.mcl" "__Lib_Time.mcl" "__Lib_Trigonometry.mcl" "__Lib_Button.mcl" "__Lib_Manchester.mcl" "__Lib_OneWire.mcl" "__Lib_PS2.mcl" "__Lib_Sound.mcl" "__Lib_SoftI2C.mcl" "__Lib_SoftSPI.mcl" "__Lib_SoftUART.mcl" "__Lib_EEPROM.mcl" "__Lib_FLASH_rwe.mcl" "__Lib_I2C_b14b25.mcl" "__Lib_PWM_b36a34.mcl" "__Lib_SPI_b412_b52a0.mcl" "__Lib_UART_b21.mcl" "__Lib_PortExpander.mcl" "__Lib_CANSPI.mcl" "__Lib_CF.mcl" "__Lib_GlcdFonts.mcl" "__Lib_Glcd.mcl" "__Lib_RS485.mcl" "__Lib_S1D13700.mcl" "__Lib_T6963C.mcl" "__Lib_SPIT6963C.mcl"	 
+hint: 0	1139	Available RAM: 368 [bytes], Available ROM: 4096 [bytes]	 
+diagnostics: 0	122	Compilation Started	gy85.h
+diagnostics: 195	123	Compiled Successfully	GY85.c
+hint: 113	1164	Variable 'value' has been eliminated by optimizer	GY85.c
+diagnostics: 0	122	Compilation Started	gy85.h
+warning: 61	1509	Generated baud rate is 9615 bps (error = 0.16 percent)	gy-85-main.c
+diagnostics: 75	123	Compiled Successfully	gy-85-main.c
+diagnostics: 0	127	All files Compiled in 282 ms	 
+hint: 0	1144	Used RAM (bytes): 184 (50%)  Free RAM (bytes): 184 (50%)	Used RAM (bytes): 184 (50%)  Free RAM (bytes): 184 (50%)
+hint: 0	1144	Used ROM (program words): 1365 (33%)  Free ROM (program words): 2731 (67%)	Used ROM (program words): 1365 (33%)  Free ROM (program words): 2731 (67%)
+diagnostics: 0	125	Project Linked Successfully	gy-85-1827.mcppi
+diagnostics: 0	128	Linked in 422 ms	 
+diagnostics: 0	129	Project 'gy-85-1827.mcppi' completed: 938 ms	 
+diagnostics: 0	103	Finished successfully: 13 nov. 2016, 15:52:34	gy-85-1827.mcppi
