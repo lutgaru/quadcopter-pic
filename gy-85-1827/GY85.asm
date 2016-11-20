@@ -54,15 +54,17 @@ _Acc_Init:
 ;GY85.c,59 :: 		I2C1_Stop();
 	CALL       _I2C1_Stop+0
 ;GY85.c,61 :: 		Delay_ms(5);
-	MOVLW      7
+	MOVLW      13
 	MOVWF      R12
-	MOVLW      125
+	MOVLW      251
 	MOVWF      R13
 L_Acc_Init0:
 	DECFSZ     R13, 1
 	GOTO       L_Acc_Init0
 	DECFSZ     R12, 1
 	GOTO       L_Acc_Init0
+	NOP
+	NOP
 ;GY85.c,63 :: 		I2C1_Start();
 	CALL       _I2C1_Start+0
 ;GY85.c,64 :: 		I2C1_Wr(ACCEL_ADDRESS);
@@ -80,15 +82,17 @@ L_Acc_Init0:
 ;GY85.c,67 :: 		I2C1_Stop();
 	CALL       _I2C1_Stop+0
 ;GY85.c,69 :: 		Delay_ms(5);
-	MOVLW      7
+	MOVLW      13
 	MOVWF      R12
-	MOVLW      125
+	MOVLW      251
 	MOVWF      R13
 L_Acc_Init1:
 	DECFSZ     R13, 1
 	GOTO       L_Acc_Init1
 	DECFSZ     R12, 1
 	GOTO       L_Acc_Init1
+	NOP
+	NOP
 ;GY85.c,71 :: 		I2C1_Start();
 	CALL       _I2C1_Start+0
 ;GY85.c,72 :: 		I2C1_Wr(ACCEL_ADDRESS);
@@ -106,15 +110,17 @@ L_Acc_Init1:
 ;GY85.c,75 :: 		I2C1_Stop();
 	CALL       _I2C1_Stop+0
 ;GY85.c,77 :: 		Delay_ms(5);
-	MOVLW      7
+	MOVLW      13
 	MOVWF      R12
-	MOVLW      125
+	MOVLW      251
 	MOVWF      R13
 L_Acc_Init2:
 	DECFSZ     R13, 1
 	GOTO       L_Acc_Init2
 	DECFSZ     R12, 1
 	GOTO       L_Acc_Init2
+	NOP
+	NOP
 ;GY85.c,78 :: 		I2C1_Start();
 	CALL       _I2C1_Start+0
 ;GY85.c,79 :: 		I2C1_Wr(ACCEL_ADDRESS);

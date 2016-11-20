@@ -1,5 +1,5 @@
-#line 1 "C:/Users/NEFT/Desktop/gy-85-1827/GY85.c"
-#line 1 "c:/users/neft/desktop/gy-85-1827/gy85.h"
+#line 1 "C:/Users/NEFT/Documents/GitHub/quadcopter-pic/gy-85-1827/GY85.c"
+#line 1 "c:/users/neft/documents/github/quadcopter-pic/gy-85-1827/gy85.h"
 
 
  unsigned short Read_Byte(unsigned short address_sensor,unsigned short register_address);
@@ -9,7 +9,7 @@
  void Magneto_Read();
  void Gyro_Init();
  void Gyro_Read();
-#line 34 "C:/Users/NEFT/Desktop/gy-85-1827/GY85.c"
+#line 34 "C:/Users/NEFT/Documents/GitHub/quadcopter-pic/gy-85-1827/GY85.c"
 extern volatile int accel[3];
 extern volatile int magnetom[3];
 extern volatile int gyro[3];
