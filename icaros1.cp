@@ -16,6 +16,8 @@ const unsigned long total_period = 12500,total_period2 = 12500,total_period3 = 1
 
 void init(){
 
+ CM1CON0 = 0;
+ CM2CON0 = 0;
  TRISA = 0x19;
  TRISB = 0x02;
  PORTB = 0x00;
