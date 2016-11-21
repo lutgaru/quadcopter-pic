@@ -299,7 +299,6 @@ ccp4m2
 ccp4m2_bit
 ccp4m3
 ccp4m3_bit
-ccpr
 ccpr1h
 ccpr1l
 ccpr2h
@@ -381,10 +380,6 @@ cren
 cren_bit
 csrc
 csrc_bit
-current_period
-current_period2
-current_period3
-current_period4
 d_not_a
 d_not_a_bit
 d_not_a_ssp2stat_bit
@@ -544,14 +539,12 @@ ics_auto
 ics_off
 indf0
 indf1
-init
 int2double
 intcon
 inte
 inte_bit
 intedg
 intedg_bit
-interrupt
 intf
 intf_bit
 iocbf
@@ -1263,10 +1256,6 @@ tmr6on_bit
 tolower
 tosh
 tosl
-total_period
-total_period2
-total_period3
-total_period4
 toupper
 trisa
 trisa0

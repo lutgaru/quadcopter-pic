@@ -25,21 +25,23 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=2
+Count=1
 File0=icaros1.c
-File1=gy-85-1827\GY85.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
 Count=0
 [OTHER_FILES]
-Count=0
+Count=1
+File0=..\..\..\..\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Examples\Internal MCU modules\P16F1937\PWM\Pwm.mcppi
 [SEARCH_PATH]
-Count=4
+Count=6
 Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Defs\
 Path1=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Uses\P16_Enh\
 Path2=C:\Users\NEFT\Documents\GitHub\quadcopter-pic\
 Path3=C:\Users\NEFT\Documents\GitHub\quadcopter-pic\gy-85-1827\
+Path4=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Examples\Internal MCU modules\P16F1937\PWM\
+Path5=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Examples\Internal MCU modules\P16F1937\PWM\
 [HEADER_PATH]
 Count=2
 Path0=C:\Users\NEFT\Documents\GitHub\quadcopter-pic\

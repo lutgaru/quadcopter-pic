@@ -1,80 +1,100 @@
-#define _XTAL_FREQ 20000000                // set crystal oscillator to 20MHz.
-#define TMR1PRESCALE 8                     // timer1 prescaler is 8.
-#define OUT RB2_bit                           // use the name OUT for RC2 pin.
 
 
-
-// variables and constants declarations
-unsigned long CCPR = 0;                    // holds the value needed to be put in CCP's registers.
-unsigned long current_period = 0;          // holds the period that timer1 will use.
-const unsigned long total_period = 12500;  // 20ms for 50hz frequency.
-
-
-// interrupt service routine
-void interrupt() {
-   if (PIR1.CCP1IF == 1) {                           // if CCP compare interrupt flag is set
+#pragma config OSC=HS
+#pragma config PWRT = OFF, BOREN = OFF
+#pragma config WDT = OFF, WDTPS = 128
+#pragma config PBADEN = OFF, LVP = OFF
 
 
-       if ((current_period > 0) && (current_period < total_period)){ // if duty is > 0% AND < 100% then:
+#define set_TMR0(x) {TMR0H=(x>>8); TMR0L=(x&0x00FF);}
+#define start_TMR0 T0CONbits.TMR0ON=1;
 
-           if (OUT == 1) {                           // if the output was 1 -> was "on-time".
-           OUT = 0;                                  // set output to 0 in order to achieve "off-time".
-           CCPR = total_period - current_period;     // make it time for "off-time", off-time = full time - on time.
-           }
+#define N_SERVO 5
+#define SERVO_0 RBO
+#define SERVO_1 RA7
+#define SERVO_2 RA3
+#define SERVO_3 RA4
 
-      else {                                    // if the output was 0 -> was "off-time".
-         OUT = 1;                               // set output to 1 in order to achieve "on-time"
-         CCPR = current_period;                 // make it time for "on-time".
-      }
-       }
-       else {
-           if (current_period == total_period) { OUT = 1;}             // if duty = 100%, then output 1 all the time.
-           if (current_period == 0)            {OUT = 0;}              // if duty = 0%, then output 0 all the time.
-       }
+uint8 servo_active=0;
+uint16 pulse[N_SERVO]={600,900,1200,1500,1800};    // in microsec
+uint16 TMR0_ini;
+
+#define slot   (20000/N_SERVO)   // Time slot allocated to each servo
+#define c_slot (65536-slot+30)
 
 
-      // now set the value of CCPR into CCP module's registers:
-
-      CCPR1H = CCPR >> 8;                       // right-shift CCPR by 8 then load it into CCPR1H register (load higher byte).
-      CCPR1L = CCPR;                            // put the lower byte of CCPR in CCPR1L register.
-      PIR1.CCP1IF = 0;                               // reset CCP1 interrupt flag.
-   }
+// High priority interruption
+#pragma interrupt high_ISR
+void high_ISR (void)
+{
+ PORTDbits.RD0=1;
+ if (TMR0_flag) // ISR de la interrupcion de TMR1
+  {
+	 switch (servo_active)
+	  {
+	   case 0:
+       SERVO_0=1-SERVO_0;                  // Changes states of SERVO_1
+	     if (SERVO_0) TMR0_ini= 25-pulse[0]; // if HIGH program pulse[0]delay
+	     else {TMR0_ini= c_slot+pulse[0]; servo_active++;} // else program 20msec/N_SERVO - pulse[0] delay
+	     break;
+	   case 1:
+       SERVO_1=1-SERVO_1;
+	     if (SERVO_1) TMR0_ini= 25-pulse[1];
+	     else {TMR0_ini= c_slot+pulse[1]; servo_active++; }
+	     break;
+	   case 2:
+       SERVO_2=1-SERVO_2;
+	     if (SERVO_2) TMR0_ini= 25-pulse[2];
+	     else {TMR0_ini= c_slot+pulse[2]; servo_active++; }
+	     break;
+	   case 3:
+       SERVO_3=1-SERVO_3;
+	     if (SERVO_3) TMR0_ini= 25-pulse[3];
+	     else {TMR0_ini= c_slot+pulse[3]; servo_active++; }
+	     break;
+	   case 4:
+       SERVO_4=1-SERVO_4;
+	     if (SERVO_4) TMR0_ini= 25-pulse[4];
+	     else {TMR0_ini= c_slot+pulse[4]; servo_active=0; }
+	     break;
+	  }
+	 set_TMR0(TMR0_ini);
+   TMR0_flag=0;
+  }
+ PORTDbits.RD0=0;
 }
 
+// Code @ 0x0008 -> Jump to ISR for Low priority interruption
+#pragma code high_vector = 0x0008
+  void code_0x0008(void) {_asm goto high_ISR _endasm}
+#pragma code
 
-// main function:
+
+
 void main() {
+  uint8 k=0;
+
+  T0CON = 0b00000000;
+
+   enable_global_ints; enable_TMR0_int;
+   start_TMR0;
+
+   ADCON1=0x0F;  // No PORTS used as AD
+   TRISA=0b00000111;
 
 
-   TRISB = 0;                 // port c is output.
-   PORTB = 0;                 // port c = 0.
+   TRISB=0; TRISC=0;  TRISD=0; PORTB=0; PORTD=0;
+   while(1)
+    {
+     if (PORTAbits.RA0==1) {k++; if (k==N_SERVO) k=0; PORTB=k;}
+     if (PORTAbits.RA1==1) if (pulse[k]<2100) pulse[k]++;
+     if (PORTAbits.RA2==1) if (pulse[k]>500) pulse[k]--;
+     //PORTB = pulse[0]/10;
+     Delay10TCYx(100);
+     //xx=ADC_Read(2); PORTB=(xx>>2);
+     //xx = xx*26; xx>>=4;
+     //pulse[0]=800+xx; //pulse[1]=1975-xx;
+     //delay_ms(20);
+    }
 
-   T1CON = 0b00110000;        // timer1 uses prescaler value of 8 and it is off.
-   TMR1H = 0;                 // timer1 registers have 0 (clear).
-   TMR1L = 0;
-
-   CCP1CON = 0x0b;            // set CCP module to compare mode and trigger special event when interrupt happens.
-   CCPR = 0;                  // load 0 in CCPR.
-   PIR1.CCP1IF = 0;                // clear CCP1 interrupt flag.
-   PIE1.CCP1IE = 1;                // enable CCP1 interrupt.
-   INTCON = 0xC0;             // enable global and peripheral interrupt.
-   T1CON = 0b00110001;        // start timer1 with the same settings like before.
-
-
-
-
-   while (1) {                                          // infinite loop.
-
-
-       // TEST CODE...
-
-       current_period = total_period * 0.5;            // 50% duty cycle.
-       delay_ms(2000);                               // delay 2s.
-       current_period = total_period * 0.1;            // 10% duty cycle.
-       delay_ms(2000);                               // delay 2s.
-       current_period = total_period * 1;              // 100% duty cycle.
-       delay_ms(2000);                               // delay 2s.
-       current_period = total_period * 0;              // 0% duty cycle.
-       delay_ms(2000);                               // delay 2s.
-      }
-   }
+}

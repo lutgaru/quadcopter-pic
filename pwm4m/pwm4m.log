@@ -1,0 +1,11 @@
+0	1	mikroCPIC1618.exe -MSF -DBG -pP16F1827 -UICD -DL -O11111114 -fo20 -N"C:\Users\NEFT\Documents\GitHub\quadcopter-pic\pwm4m\pwm4m.mcppi" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Defs\" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Uses\P16_Enh\" -SP"C:\Users\NEFT\Documents\GitHub\quadcopter-pic\pwm4m\" "pwm4m.c" "__Lib_Math.mcl" "__Lib_MathDouble.mcl" "__Lib_System.mcl" "__Lib_Delays.mcl"	 
+hint: 0	1139	Available RAM: 368 [bytes], Available ROM: 4096 [bytes]	 
+diagnostics: 0	122	Compilation Started	pwm4m.c
+diagnostics: 138	123	Compiled Successfully	pwm4m.c
+diagnostics: 0	127	All files Compiled in 78 ms	 
+hint: 0	1144	Used RAM (bytes): 20 (5%)  Free RAM (bytes): 348 (95%)	Used RAM (bytes): 20 (5%)  Free RAM (bytes): 348 (95%)
+hint: 0	1144	Used ROM (program words): 515 (13%)  Free ROM (program words): 3581 (87%)	Used ROM (program words): 515 (13%)  Free ROM (program words): 3581 (87%)
+diagnostics: 0	125	Project Linked Successfully	pwm4m.mcppi
+diagnostics: 0	128	Linked in 109 ms	 
+diagnostics: 0	129	Project 'pwm4m.mcppi' completed: 250 ms	 
+diagnostics: 0	103	Finished successfully: 20 nov. 2016, 23:33:18	pwm4m.mcppi
