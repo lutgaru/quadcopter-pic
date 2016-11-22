@@ -4,7 +4,7 @@ Clock=20000000
 [MEMORY_MODEL]
 Value=0
 [BUILD_TYPE]
-Value=1
+Value=0
 [ACTIVE_TAB]
 Value=pwm4m.c
 [USE_EEPROM]
@@ -24,8 +24,9 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=1
+Count=2
 File0=pwm4m.c
+File1=..\..\..\..\Desktop\Programa PIC\Control 8 servos.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]

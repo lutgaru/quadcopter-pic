@@ -5,135 +5,46 @@
 
 
 
+unsigned short PWM0=0,PWM1=0,PWM2=0,PWM3=0;
+unsigned short control_PWM=0;
 
+void interrupt(void){
+ control_PWM++;
 
+ if (control_PWM==0){
+  PORTB.RB0 =1;
+  PORTA.RA7 =1;
+  PORTA.RA3 =1;
+  PORTA.RA4 =1;
 
-unsigned long CCPR = 0;
-unsigned long current_period1 = 0,current_period2 = 0,current_period3 = 0,current_period4 = 0;
-const unsigned long total_period1 = 12500,total_period2 = 12500,total_period3 = 12500,total_period4 = 12500;
-
-
-
-void interrupt() {
- if (PIR1.CCP1IF == 1) {
-
-
- if ((current_period1 > 0) && (current_period1 < total_period1)){
-
- if ( PORTB.RB0  == 1) {
-  PORTB.RB0  = 0;
- CCPR = total_period1 - current_period1;
  }
 
- else {
-  PORTB.RB0  = 1;
- CCPR = current_period1;
- }
- }
- else {
- if (current_period1 == total_period1) {  PORTB.RB0  = 1;}
- if (current_period1 == 0) { PORTB.RB0  = 0;}
- }
- if ((current_period2 > 0) && (current_period2 < total_period2)){
+ if (control_PWM==PWM0)  PORTB.RB0 =0;
+ if (control_PWM==PWM1)  PORTA.RA7 =0;
+ if (control_PWM==PWM2)  PORTA.RA3 =0;
+ if (control_PWM==PWM3)  PORTA.RA4 =0;
 
- if ( PORTA.RA7  == 1) {
-  PORTA.RA7  = 0;
- CCPR = total_period2 - current_period2;
- }
-
- else {
-  PORTA.RA7  = 1;
- CCPR = current_period2;
- }
- }
- else {
- if (current_period2 == total_period2) {  PORTA.RA7  = 1;}
- if (current_period2 == 0) { PORTA.RA7  = 0;}
- }
- if ((current_period3 > 0) && (current_period3 < total_period3)){
-
- if ( PORTA.RA3  == 1) {
-  PORTA.RA3  = 0;
- CCPR = total_period3 - current_period3;
- }
-
- else {
-  PORTA.RA3  = 1;
- CCPR = current_period3;
- }
- }
- else {
- if (current_period3 == total_period3) {  PORTA.RA3  = 1;}
- if (current_period3 == 0) { PORTA.RA3  = 0;}
- }
- if ((current_period4 > 0) && (current_period4 < total_period4)){
-
- if ( PORTA.RA4  == 1) {
-  PORTA.RA4  = 0;
- CCPR = total_period4 - current_period4;
- }
-
- else {
-  PORTA.RA4  = 1;
- CCPR = current_period4;
- }
- }
- else {
- if (current_period4 == total_period4) {  PORTA.RA4  = 1;}
- if (current_period4 == 0) { PORTA.RA4  = 0;}
- }
-
-
-
-
- CCPR1H = CCPR >> 8;
- CCPR1L = CCPR;
- PIR1.CCP1IF = 0;
- }
-
+ TMR0= 254;
+ INTCON.TMR0IF=0;
 }
 
 
+void main(){
+ ANSELA=0;
+ ANSELB=0;
+ TRISA=0;
+ PORTA=0;
+ TRISB=0;
+ PORTB=0;
+ OPTION_REG = 0x07;
+ INTCON = 0xA0;
+ TMR0 = 254;
+ while(1){
 
-void main() {
+ pwm0=200;
+ pwm1=100;
+ pwm2=50;
+ pwm3=25;
 
- ANSELA = 0;
- ANSELB = 0;
- TRISA = 0;
- TRISB = 0;
- PORTA = 0;
- PORTB = 0;
-
- T1CON = 0b00110000;
- TMR1H = 0;
- TMR1L = 0;
-
- CCP1CON = 0x0b;
- CCP2CON = 0x0b;
- CCP3CON = 0x0b;
- CCP4CON = 0x0b;
- CCPR = 0;
- PIR1.CCP1IF = 0;
- PIR2.CCP2IF = 0;
- PIR3.CCP3IF = 0;
- PIR3.CCP4IF = 0;
- PIE1.CCP1IE = 1;
- PIE2.CCP2IE = 1;
- PIE3.CCP3IE = 1;
- PIE3.CCP4IE = 1;
- INTCON = 0xC0;
- T1CON = 0b00110001;
-
-
-
-
- while (1) {
-
-
-
-
- current_period1 = total_period1 * 0.9;
- current_period2 = total_period2 * 0.5;
- current_period3 = total_period3 * 0.2;
- current_period4 = total_period4 * 0.9;
- } }
+ }
+}
