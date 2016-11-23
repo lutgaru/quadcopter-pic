@@ -6,6 +6,7 @@
 
 unsigned short PWM0=0,PWM1=0,PWM2=0,PWM3=0; //Valores de las señales PWM
 unsigned short control_PWM=0;
+unsigned char control;
 
 void interrupt(void){
   control_PWM++;                //Incremento cada rebose del timer0
@@ -29,21 +30,46 @@ void interrupt(void){
 
 
 void main(){
+  OSCCON=0b11110000;
   ANSELA=0;
   ANSELB=0;
   TRISA=0;
   PORTA=0;
   TRISB=0;
   PORTB=0;
+  TXCKSEL_bit=1;
+  RXDTSEL_bit=1;
   OPTION_REG = 0x07;   // Pre-escalador (1:32) se le asigna al temporizador Timer0
   INTCON = 0xA0;       // Habilitada la generación de interrupción para el
   TMR0 = 254;          // Temporizador T0 cuenta de 155 a 255
+  UART1_Init(9600);
+  TRISB2_bit = 1;     // only change if pin remap done
+  TRISB5_bit = 0;     // only change if pin remap done
+  Delay_ms(100);
+  PWM0 = 4;
+  PWM1 = 1;
+  PWM2 = 1;
+  PWM3 = 15 ;
   while(1){
+  //UART_Write_Text("PWM+\n\r");
+   control = UART1_Read();
+   if(control == 'a'){
+   UART_Write_Text("PWM+\n\r");
+   Delay_ms(100);
+   PWM0++;                    //Impulso de 0,8 msg de pwm0 posición 0º
+   PWM1++;                      //Impulso de 0,8 msg de pwm1 posición 0º
+   PWM2++;                      //Impulso de 0,8 msg de pwm2 posición 0º
+   PWM3++;                      //Impulso de 0,8 msg de pwm3 posición 0º
 
-   pwm0=200;                      //Impulso de 0,8 msg de pwm0 posición 0º
-   pwm1=100;                      //Impulso de 0,8 msg de pwm1 posición 0º
-   pwm2=50;                      //Impulso de 0,8 msg de pwm2 posición 0º
-   pwm3=25;                      //Impulso de 0,8 msg de pwm3 posición 0º
+   }
+   if(control == 'b'){
+   UART_Write_Text("PWM-\n\r");
+   Delay_ms(100);
+   PWM0--;                    //Impulso de 0,8 msg de pwm0 posición 0º
+   PWM1--;                      //Impulso de 0,8 msg de pwm1 posición 0º
+   PWM2--;                      //Impulso de 0,8 msg de pwm2 posición 0º
+   PWM3--;                      //Impulso de 0,8 msg de pwm3 posición 0º
 
+   }
   }
 }

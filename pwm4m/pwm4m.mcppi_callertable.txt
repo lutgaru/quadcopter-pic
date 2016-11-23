@@ -1,3 +1,8 @@
 main
 	__CC2DW
+	UART1_Init
+	UART1_Read
+	UART_Write_Text
+		UART_Write
+			____DoIFC
 interrupt

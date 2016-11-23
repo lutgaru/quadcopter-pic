@@ -7,6 +7,7 @@
 
 unsigned short PWM0=0,PWM1=0,PWM2=0,PWM3=0;
 unsigned short control_PWM=0;
+unsigned char control;
 
 void interrupt(void){
  control_PWM++;
@@ -30,21 +31,46 @@ void interrupt(void){
 
 
 void main(){
+ OSCCON=0b11110000;
  ANSELA=0;
  ANSELB=0;
  TRISA=0;
  PORTA=0;
  TRISB=0;
  PORTB=0;
+ TXCKSEL_bit=1;
+ RXDTSEL_bit=1;
  OPTION_REG = 0x07;
  INTCON = 0xA0;
  TMR0 = 254;
+ UART1_Init(9600);
+ TRISB2_bit = 1;
+ TRISB5_bit = 0;
+ Delay_ms(100);
+ PWM0 = 4;
+ PWM1 = 1;
+ PWM2 = 1;
+ PWM3 = 15 ;
  while(1){
 
- pwm0=200;
- pwm1=100;
- pwm2=50;
- pwm3=25;
+ control = UART1_Read();
+ if(control == 'a'){
+ UART_Write_Text("PWM+\n\r");
+ Delay_ms(100);
+ PWM0++;
+ PWM1++;
+ PWM2++;
+ PWM3++;
 
+ }
+ if(control == 'b'){
+ UART_Write_Text("PWM-\n\r");
+ Delay_ms(100);
+ PWM0--;
+ PWM1--;
+ PWM2--;
+ PWM3--;
+
+ }
  }
 }
